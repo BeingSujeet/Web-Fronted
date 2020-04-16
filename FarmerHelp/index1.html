@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords"
+          content="picturethis, plant identification, picture this, plant, identification, garden, answers, identifier, id, flower, gardening, rose, snap, compass, ai">
+    <meta name="description"
+          content="Instantly identify plants by photo!">
+    <script src="scripts/min.js"></script>
+    <title>FarmerHelp - Plant identifier</title>
+    <link rel="SHORTCUT ICON" href="images/logo_navbar_48.png">
+    <meta property="og:image" content="https://static.picturethisai.com/production/icons/web/pic_share.png">
+    <meta property="og:title" content="PictureThis - Plant identifier">
+    <meta property="og:description" content="Instantly identify plants by photo!">
+    <style type="text/css">
+        html, body, div {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            font-size: 100%;
+            font-family: "Helvetica Neue", "Microsoft YaHei", sans-serif;
+        }
+
+        html {
+            overflow-x: auto;
+            min-width: 1250px;
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+
+        li a {
+            font-size: 14px;
+            font-family: "HelveticaNeue", sans-serif;
+            text-decoration: none;
+            color: #333333;
+        }
+
+        li a:hover {
+            font-family: "HelveticaNeue-Bold", sans-serif;
+            color: #30C29A;
+            font-weight: bolder;
+            font-size: 14px;
+        }
+
+        input::-webkit-input-placeholder {
+            font-size: 18px;
+            color: #999999;
+        }
+
+        input::-moz-placeholder {
+            font-size: 18px;
+            color: #999999;
+        }
+
+        input::-ms-input-placeholder {
+            font-size: 18px;
+            color: #999999;
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        .masking {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 9998;
+        }
+
+        .download-app {
+            background: #FFFFFF;
+            border-radius: 10px;
+            position: fixed;
+            width: 450px;
+            height: 370px;
+            margin: auto;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 9999;
+            text-align: center;
+        }
+
+        .download-app-content {
+            font-family: "HelveticaNeue", sans-serif;
+            margin: 32px 40px 40px 40px;
+            font-size: 22px;
+            color: #333333;
+            letter-spacing: 0;
+            text-align: center;
+            line-height: 28px;
+        }
+
+        .download-app-btn {
+            margin: 0 auto;
+            padding: 13px 35px;
+            background: #30C29A;
+            border-radius: 28px;
+            font-family: "HelveticaNeue-Bold", sans-serif;
+            font-size: 18px;
+            color: #FFFFFF;
+            letter-spacing: 0;
+            cursor: pointer;
+        }
+
+        .download-ios, .download-android, .facebook, .twitter, .ins, .presskit {
+            cursor: pointer;
+        }
+
+        .header {
+            width: 100%;
+            background: url('images/pic_logo_bg.png') no-repeat center;
+            -webkit-background-size: cover;
+            background-size: cover;
+        }
+
+        .row-flex {
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-wrap: nowrap;
+            -webkit-flex-wrap: nowrap;
+            -moz-flex-wrap: nowrap;
+            -ms-flex-wrap: nowrap;
+            -o-flex-wrap: nowrap;
+        }
+
+        .nav {
+            width: 100%;
+            height: 88px;
+            z-index: 1000;
+        }
+
+        .nav-scroll {
+            color: #181818;
+            background: #ffffff;
+            position: fixed;
+            border-bottom: 1px solid #CACACA;
+        }
+
+        .nav-logo {
+            margin-left: 13.5%;
+            margin-top: 18px;
+            height: 44px;
+            float: left;
+        }
+
+        .nav-logo .nav-label {
+            font-size: 22px;
+            color: #333333;
+            line-height: 44px;
+            margin-left: 36px;
+            height: 44px;
+            display: inline-block;
+        }
+
+        .nav-logo img {
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        .nav-menu {
+            width: -moz-fit-content;
+            width: fit-content;
+            margin-right: 12.3%;
+            float: right;
+        }
+
+        .nav-menu-button {
+            margin-top: 3px;
+            font-size: 16px;
+            font-weight: bolder;
+            color: #333333;
+            margin-left: 60px;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .nav-menu-button:hover {
+            color: #30C29A;
+        }
+
+        .nav-menu-button:active {
+            color: #30C29A;
+        }
+
+        .nav-menu-button a:hover {
+            color: #30C29A;
+        }
+
+        .nav-menu-button a:active {
+            color: #30C29A;
+        }
+
+        .search {
+            margin: 0px;
+        }
+
+        .search-button {
+            margin-top: 12px;
+            margin-left: 48px;
+            width: 64px;
+            height: 64px;
+        }
+
+        .nav-search-box {
+            position: fixed;
+            border: 1px solid #30C29A;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 2px 6px gray;
+            width: 720px;
+            height: 67px;
+            right: 12.3%;
+            top: 89px;
+            z-index: 999;
+            background-color: #ffffff;
+        }
+
+        .nav-search-box:hover {
+            box-shadow: 0 2px 10px gray;
+        }
+
+        .header-search-box {
+            border: 1px solid #30C29A;
+            border-radius: 10px;
+            box-shadow: 0 0 6px gray;
+            width: 800px;
+            margin-top: 47px;
+            background-color: #ffffff;
+        }
+
+        .header-search-box:hover {
+            box-shadow: 0 0 10px gray;
+        }
+
+        .search-input {
+            vertical-align: top;
+            margin-left: 24px;
+            margin-top: 8px;
+            width: 535px;
+            height: 64px;
+            border: 0px;
+            outline: 0;
+            font-size: 26px;
+        }
+
+        .center-line {
+            position: absolute;
+            height: 32px;
+            width: 0px;
+            top: 16px;
+            border: 1px solid #dddddd;
+            vertical-align: center;
+        }
+
+        .search-icon {
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .label-search-icon-1 {
+            vertical-align: center;
+            width: 64px;
+            height: 64px;
+        }
+
+        .search-icon-1, .header-search-icon-1 {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .label-search-icon-2 {
+            width: 64px;
+            height: 64px;
+        }
+
+        .search-icon-2, .header-search-icon-2 {
+            width: 64px;
+            height: 64px;
+            position: absolute;
+            opacity: 0;
+        }
+
+        .nav-language-change {
+            padding-top: 10px;
+            position: fixed;
+            box-shadow: 0 2px 7px gray;
+            width: 160px;
+            top: 73px;
+            text-align: center;
+            z-index: 999;
+            background-color: #ffffff;
+        }
+
+        .nav-language-change ul {
+            padding-left: 0;
+        }
+
+        .nav-language-change ul li {
+            list-style-type: none;
+            margin-bottom: 19px;
+        }
+
+        .header-content {
+            left: 13.2%;
+            padding-top: 150px;
+            width: 86.8%;
+            display: table;
+        }
+
+        .app-desc div {
+            max-width: 900px;
+            width: 720px;
+            font-family: "HelveticaNeue-Bold", sans-serif;
+            font-size: 40px;
+            color: #222222;
+            letter-spacing: 0;
+        }
+
+        .header-content .intro {
+            color: #ffffff;
+            margin-left: 5px;
+            margin-top: 8px;
+        }
+
+        .header-content .intro .other {
+            color: #999999;
+            width: 720px;
+            max-width: 900px;
+            font-size: 20px;
+            font-family: 'Helvetica Light', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+        }
+
+        .table-item {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .header-content-left {
+            width: 50%;
+        }
+
+        .header-content-right {
+            text-align: right;
+            width: 50%;
+        }
+
+        .top-download {
+            margin-top: 56px;
+            left: -4px;
+        }
+
+        .top-download img {
+            margin-right: 20px;
+        }
+
+        .content {
+            width: 100%;
+            height: 700px;
+            background-color: #ffffff;
+        }
+
+        .main-content {
+            width: 1250px;
+            height: 100%;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .main-content .left {
+            float: left;
+            height: 100%;
+        }
+
+        .main-content .right {
+            float: right;
+            height: 100%;
+        }
+
+        .main-content .font1 {
+            font-size: 28px;
+            font-family: 'HelveticaNeue-Bold', sans-serif;
+            font-weight: bold;
+            color: #181818;
+            margin-top: 200px;
+        }
+
+        .main-content .font2 {
+            font-size: 18px;
+            color: #666666;
+            margin-top: 24px;
+        }
+
+        .download-content {
+            width: 1250px;
+            height: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .download-content .title {
+            padding-top: 100px;
+            margin-bottom: 24px;
+            font-family: "HelveticaNeue-Bold", sans-serif;
+            font-size: 32px;
+            color: #333333;
+            letter-spacing: 0;
+            line-height: 46px;
+        }
+
+        .desc-1, .desc-2 {
+            font-family: "HelveticaNeue", sans-serif;
+            font-size: 20px;
+            color: #666666;
+            letter-spacing: 0;
+            text-align: center;
+            line-height: 28px;
+        }
+
+        .download-two {
+            margin-top: 48px;
+            margin-bottom: 52px;
+        }
+
+        .download-two img {
+            height: 80px;
+        }
+
+        .content-img-1 {
+            height: 780px;
+            margin-top: -80px;
+        }
+
+        .content-img-2 {
+            height: 640px;
+            margin-top: 60px;
+        }
+
+        .content-shadow {
+            box-shadow: 0 0 25px gray;
+            z-index: 1;
+        }
+
+        .columns {
+            margin-top: 60px;
+        }
+
+        .columns-1 {
+            margin-left: -30px;
+        }
+
+        .columns-2 {
+            margin-left: -30px;
+        }
+
+        .columns-3 {
+            margin-left: -30px;
+        }
+
+        .columns p {
+            font-size: 14px;
+            color: #000000;
+        }
+
+        .columns .item {
+            width: 250px;
+            text-align: center;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        .columns .item p {
+            font-family: 'HelveticaNeue-Medium', sans-serif;
+            font-size: 15px;
+            letter-spacing: 0;
+            color: #666666;
+        }
+
+        .bottom, .part2 {
+            width: 100%;
+        }
+
+        .part2 {
+            background: url("images/pic_5_blackbg.png") no-repeat center;
+            background-size: cover;
+        }
+
+        .part2 {
+            position: relative;
+        }
+
+        .part2-title {
+            width: 100%;
+            padding-top: 80px;
+            text-align: center;
+        }
+
+        .contacts {
+            width: 100%;
+            text-align: center;
+        }
+
+        .contact-first, .contact-second {
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            border: 2px solid #ffffff;
+            border-radius: 4px;
+            width: 316px;
+            padding: 16px;
+            margin: 0 44px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .presskit {
+            vertical-align: bottom;
+            width: 352px;
+            height: 97px;
+            margin: 0 44px;
+        }
+
+        .contact-item div {
+            display: inline-block;
+        }
+
+        .contact-icon {
+            width: 46px;
+        }
+
+        .contact-icon img {
+            width: 47px;
+            display: block;
+        }
+
+        .contact-info {
+            margin-left: 20px;
+        }
+
+        .contact-host {
+            font-size: 26px;
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 4px;
+        }
+
+        .contact-name {
+            font-family: 'HelveticaNeue-Light', sans-serif;
+            font-size: 18px;
+            color: #ffffff;
+            margin-top: 0;
+        }
+
+        .company-info {
+            width: 100%;
+            height: 120px;
+            margin-top: 159px;
+            bottom: 0;
+            font-size: 18px;
+            color: #cacaca;
+            text-align: center;
+        }
+
+        .company-info a{
+            display: inline-block;
+            margin-left: 5%;
+            color: #FFFFFF;
+            text-decoration: underline;
+            padding-right: 5%;
+            border-right: #CACACA 2px solid;
+        }
+
+        .copyright {
+           display: inline-block;
+            margin-left: 5%;
+            color: #CACACA;
+        }
+
+        .scroll-top {
+            position: absolute;
+            bottom: 0;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            width: 360px;
+            height: 64px;
+            border: 1px solid #dddddd;
+            margin-top: 48px;
+            cursor: pointer;
+        }
+
+        .scroll-top:hover {
+            background: #666666;
+        }
+
+        .scroll-top:active {
+            background: #444444;
+        }
+
+        .scroll-top p {
+            margin: 0;
+        }
+
+        .qr-code {
+            width: 250px;
+        }
+        .header-download {
+            height: 60px;
+            margin-bottom: 5px;
+        }
+        a{
+            position: relative;
+            padding: 15px 30px;
+            display: inline-block;
+            justify-content: center;
+            color: #bf0f32;
+            margin-top: 150px;
+            margin-left: 800px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-decoration: none;
+            font-size: 24px;
+            overflow: hidden;
+            transition: 0.2s;
+            align-items: center;
+            min-height: 3vh;
+            font-family: consolas;
+        }
+        a:hover{
+            color: #255784;
+            background: #2196f3;
+            box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
+            transition-delay: 0.1s;
+        }
+
+        @media (min-width: 2300px) {
+            .header-content {
+                padding-top: 170px
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        var region = 0;
+        var page = 0;
+
+        function scrollToTop() {
+            $('html,body').animate({scrollTop: '0px'}, 800);
+        }
+
+        function scrollBottom() {
+            $('html,body').animate({scrollTop: '6700px'}, 800);
+        }
+
+        function checkNavDownload() {
+            var navAndroid = $(".nav-menu .download-android");
+            var navIos = $(".nav-menu .download-ios");
+            if ($(".nav").hasClass('nav-normal')) {
+                navAndroid.addClass("hide");
+                navIos.addClass("hide");
+            } else {
+                navAndroid.removeClass("hide");
+                navIos.removeClass("hide");
+            }
+        }
+
+        function selfAdaption() {
+            var height = $(".header").height();
+            if (height < 800) {
+                $(".header-search-box").css("margin-top", "20px");
+                $(".top-download").css("margin-top", "20px");
+                $(".columns").css("margin-top", "10px");
+            } else {
+                $(".header-search-box").css("margin-top", "30px");
+                $(".top-download").css("margin-top", "30px");
+                $(".columns").css("margin-top", "30px");
+            }
+        }
+
+        function resizeUI() {
+            var clientHeight = $(window).height();
+            var clientWidth = $(window).width();
+            $(".header").css({"min-height": clientHeight + "px"});
+            var downloadTop = $(".top-download").offset().top;
+            if (downloadTop + 75 > clientHeight) {
+                var newPadding = 120 - (downloadTop + 75 - clientHeight);
+                if (newPadding > 0) $(".header-content").css({"padding-top": newPadding + "px"});
+            }
+            if (clientHeight < 715) {
+                $(".header-content").css({"padding-top": "100px"});
+            }
+            var right = clientWidth * 0.123 + 64;
+            $(".nav-language-change").css({"right": right + "px"});
+            selfAdaption();
+        }
+
+        function showDownloadWindow() {
+            if ($(".masking").hasClass("hide")) {
+                $(".masking").removeClass("hide");
+            }
+            if ($(".download-app").hasClass("hide")) {
+                $(".download-app").removeClass("hide");
+            }
+        }
+
+        function uploadSearch(submit, input) {
+            submit.attr('action', '/web/search/search_flower_by_word');
+            submit.attr('enctype', 'application/x-www-form-urlencoded');
+            if (input.val().length != 0) {
+                submit.submit();
+            }
+        }
+
+        function submitForm() {
+            var submitImage = $("#uploadimage");
+            var input = $("#uploadimage .search-input");
+            $("#page").val(page);
+            $("#region").val(region);
+            uploadSearch(submitImage, input);
+        }
+
+        function submitHeaderForm() {
+            var submitImage = $("#header-uploadimage");
+            var input = $("#header-uploadimage .search-input");
+            $("#header-page").val(page);
+            $("#header-region").val(region);
+            uploadSearch(submitImage, input);
+        }
+
+        function changeRegion(re) {
+            region = re;
+        }
+
+        function mapRegion() {
+            var lo = 'en';
+            if (lo == 'ja') {
+                region = 1;
+                $(".label-lang1").css({"color": "#30C29A"});
+            } else if (lo == 'fr') {
+                region = 2;
+                $(".label-lang2").css({"color": "#30C29A"});
+            } else if (lo == 'ar') {
+                region = 3;
+                $(".label-lang3").css({"color": "#30C29A"});
+            } else if (lo == 'sp') {
+                region = 4;
+                $(".label-lang4").css({"color": "#30C29A"});
+            } else if (lo == 'ru') {
+                region = 5;
+                $(".label-lang5").css({"color": "#30C29A"});
+            } else if (lo == 'po') {
+                region = 6;
+                $(".label-lang6").css({"color": "#30C29A"});
+            } else if (lo == 'ge') {
+                region = 7;
+                $(".label-lang7").css({"color": "#30C29A"});
+            } else if (lo == 'it') {
+                region = 8;
+                $(".label-lang8").css({"color": "#30C29A"});
+            } else {
+                region = 0;
+                $(".label-lang0").css({"color": "#30C29A"});
+            }
+        }
+
+        function checkRegionArabic() {
+            if (region == 3) {
+                $(".font1").css({"text-align": "right"});
+                $(".font2").css({"text-align": "right"});
+                $(".other").css({"text-align": "right"});
+                $(".app-desc div").css({"text-align": "right"});
+            }
+        }
+
+        function checkJumpEvent() {
+            var jump = 'home';
+            if (jump == "download") {
+                $('html,body').animate({scrollTop: $('.download-content').offset().top}, 800);
+            } else if (jump == "contact") {
+                $('html,body').animate({scrollTop: $('.part2').offset().top}, 800);
+            }
+        }
+
+        $(window).load(function () {
+            mapRegion();
+            resizeUI();
+            checkJumpEvent();
+            checkRegionArabic();
+        });
+        $(document).ready(function () {
+            checkNavDownload();
+            $(document).bind('click', function (e) {
+                var e = e || window.event; //浏览器兼容性
+                var elem = e.target || e.srcElement;
+                while (elem) { //循环判断至跟节点，防止点击的是div子元素
+                    if ((elem.id && elem.id == 'lang') || (elem.id && elem.id == 'change') || (elem.id && elem.id == 'searchbox') || (elem.id && elem.id == 'search')) {
+                        return;
+                    }
+                    elem = elem.parentNode;
+                }
+                if ($(".nav-language-change").hasClass('hide') && $(".nav-search-box").hasClass('hide')) {
+                    return;
+                } else {
+                    $(".nav-language-change").addClass("hide");
+                    $(".nav-search-box").addClass("hide");
+                }
+            });
+            $(window).resize(function () {
+                resizeUI();
+            });
+            $(".download-ios").click(function () {
+                window.open("", "_blank");
+            });
+            $(".download-android").click(function () {
+                window.open("", "_blank");
+            });
+            $(".facebook").click(function () {
+                window.open('');
+            });
+            $(".twitter").click(function () {
+                window.open('');
+            });
+            $(".ins").click(function () {
+                window.open('');
+            });
+            $(".gmail").click(function () {
+                scrollBottom();
+            });
+            $(".presskit").click(function () {
+                window.open('');
+            });
+            $(".download").click(function () {
+                $('html,body').animate({scrollTop: $('.download-content').offset().top}, 800);
+            });
+            $(".connect").click(function () {
+                $('html,body').animate({scrollTop: $('.part2').offset().top}, 800);
+            });
+            $(".search").click(function () {
+                var searchBox = $(".nav-search-box");
+                if ($(".nav-search-box").hasClass('hide')) {
+                    searchBox.removeClass("hide");
+                    if (!$(".nav-language-change").hasClass('hide')) {
+                        $(".nav-language-change").addClass('hide');
+                    }
+                } else {
+                    searchBox.addClass("hide");
+                }
+            });
+            $(".language").click(function () {
+                var languageChange = $(".nav-language-change");
+                if (languageChange.hasClass('hide')) {
+                    languageChange.removeClass("hide");
+                    if (!$(".nav-search-box").hasClass('hide')) {
+                        $(".nav-search-box").addClass('hide');
+                    }
+                } else {
+                    languageChange.addClass('hide');
+                }
+            });
+            $(".scroll-top").click(function () {
+                scrollToTop();
+            });
+            $(".nav-menu-button").hover(function () {
+                $(this).find(".hover").removeClass("hide");
+                $(this).find(".normal").addClass("hide");
+            }, function () {
+                $(this).find(".hover").addClass("hide");
+                $(this).find(".normal").removeClass("hide");
+            });
+            $(".masking").click(function () {
+                if (!$(".masking").hasClass("hide")) {
+                    $(".masking").addClass("hide");
+                }
+                if (!$(".download-app").hasClass("hide")) {
+                    $(".download-app").addClass("hide");
+                }
+            });
+            $(".download-app-btn").click(function () {
+                if (!$(".masking").hasClass("hide")) {
+                    $(".masking").addClass("hide");
+                }
+                if (!$(".download-app").hasClass("hide")) {
+                    $(".download-app").addClass("hide");
+                }
+                $('html,body').animate({scrollTop: $('.download-content').offset().top - 88}, 400);
+            });
+            $(window).scroll(function () {
+                checkNavDownload();
+            });
+            $("#searchbox .search-input").keydown(function (e) {
+                var keyCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+                if (keyCode == 13) {
+                    $(".search-icon-2").trigger("click");
+                }
+            });
+            $(".header-search-box .search-input").keydown(function (e) {
+                var keyCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+                if (keyCode == 13) {
+                    $(".header-search-icon-2").trigger("click");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="masking hide"></div>
+<div class="download-app hide">
+    <img src="images/pic_popups_moblieonly.png">
+    <div class="download-app-content">
+        Sorry, plant identification is only available on mobile devices at the moment.
+    </div>
+    <span class="download-app-btn">Download App Now</span>
+</div>
+<div class="header">
+    <div class="nav nav-scroll">
+        <div class="nav-logo">
+            <img alt="PictureThis · Plant identifier"
+                 src="images/logo_navbar_48.png">
+            <label class="nav-label">FarmerHelp</label>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-menu-button download">Download</div>
+            <div class="nav-menu-button connect">Contact us</div>
+            <div id="change" class="nav-menu-button language">
+                <span>Language</span>
+            </div>
+            <div id="search" class="nav-menu-button search">
+                <img class="search-button" src="images/icon_search.png">
+            </div>
+            <div id="lang" class="nav-language-change hide">
+                <ul>
+                    <li><a class="label-lang0" onclick="changeRegion(0)"
+                           href="http://www.picturethisai.com/web/config/change_language/en">English</a></li>
+                                        <li><a class="label-lang2" onclick="changeRegion(2)"
+                           href="http://www.picturethisai.com/web/config/change_language/fr">Français</a></li>
+                    <li><a class="label-lang3" onclick="changeRegion(3)"
+                           href="http://www.picturethisai.com/web/config/change_language/ar">العربية</a></li>
+                                        <li><a class="label-lang5" onclick="changeRegion(5)"
+                           href="http://www.picturethisai.com/web/config/change_language/ru">Pусский</a></li>
+                                        <li><a class="label-lang7" onclick="changeRegion(7)"
+                           href="http://www.picturethisai.com/web/config/change_language/ge">Deutsch</a></li>
+                    <li><a class="label-lang8" onclick="changeRegion(8)"
+                           href="http://www.picturethisai.com/web/config/change_language/it">Italiano</a></li>
+                </ul>
+            </div>
+            <div id="searchbox" class="nav-search-box hide">
+                <form id="uploadimage" action="/web/item/upload_flower_to_save" method="post"
+                      enctype="multipart/form-data">
+                    <input class="search-input" autocomplete="off" type="text" name="word"
+                           placeholder="Upload picture or search by the name">
+                    <span class="center-line"></span>
+                    <div class="search-icon">
+                        <input id="page" style="display: none" name="page">
+                        <input id="region" style="display: none" name="region">
+                        <label class="label-search-icon-1">
+                            <img onclick="showDownloadWindow()"
+                                 src="images/icon_photo.png">
+                        </label>
+                        <label class="label-search-icon-2">
+                            <input class="search-icon-2" type="button" onclick="submitForm()">
+                            <img src="images/icon_search.png">
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="header-content">
+        <div class="table-item header-content-left">
+            <div class="app-desc">
+                <div>FarmerHelp -</div>
+                <div>Guide you for your future</div>
+            </div>
+            <div class="intro">
+                <div class="other">Here know about plants and Detect diseases by uploading images...</div>
+            </div>
+            <div class="header-search-box" style="width: 720px;">
+                <form id="header-uploadimage" action="/web/item/upload_flower_to_save" method="post"
+                      enctype="multipart/form-data">
+                    <input class="search-input" autocomplete="off" type="text" name="word"
+                           placeholder="Upload picture or search by the name">
+                    <span class="center-line"></span>
+                    <div class="search-icon">
+                        <input id="header-page" style="display: none" name="page">
+                        <input id="header-region" style="display: none" name="region">
+                        <label class="label-search-icon-1">
+                            <img onclick="showDownloadWindow()"
+                                 src="images/icon_photo.png">
+                        </label>
+                        <label class="label-search-icon-2">
+                            <input class="header-search-icon-2" type="button" onclick="submitHeaderForm()">
+                            <img src="images/icon_search.png">
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="top-download">
+                <img class="qr-code" src="images/qr_download.png"/>   
+                <img class="download-ios header-download" style="margin: 0 32px 5px 28px"
+                     src="images/btn_download_appstore_80.png">
+                <img class="download-android header-download"
+                     src="images/btn_download_googleplay_80.png">
+            </div>
+            
+        </div>
+        <div class="table-item header-content-right">
+            <img style="vertical-align: middle;width: 100%"
+                 src="images/pic_display_device.png">
+        </div>
+    </div>
+    <a href="#">
+        Know More
+    </a>
+</div>
+<div style="background: url('images/pic_2_identifying.png') no-repeat center;background-size: 100% 100%"
+     class="content content-shadow">
+    <div class="main-content">
+        <div class="left">
+            <img class="content-img-1"
+                 src="images/phone_2_identifying.png"/>
+        </div>
+        <div class="right" style="width: 750px">
+            <p class="font1">Identifying the diseases in plants got easier then over with FarmerHelp !</p>
+            <p class="font2">Simply take a pic, upload and get accurate results with the revolutionary artificial intelligence technology.</p>
+            <div class="row-flex columns columns-1">
+                <div class="item">
+                    <img src="images/icon_2_photo_64.png">
+                    <p>Identify 99% common species. 10,000+ species in our searchable database</p>
+                </div>
+                <div class="item">
+                    <img src="images/icon_2_accuracy_64.png">
+                    <p>Accuracy rate of 95%</p>
+                </div>
+                <div class="item">
+                    <img src="images/icon_2_plants_64.png">
+                    <p>27,000,000 pics of plants have been identified by FarmerHelp</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="background: url('images/pic_3_learning.png') no-repeat center;background-size: 100% 100%"
+     class="content">
+    <div class="main-content">
+        <div class="left" style="width: 750px;">
+            <p class="font1">Let the learning begin with our super rich content.</p>
+            <p class="font2">From watering frequency to pest and disease control, from literature to fun fact, everything you want to know about the plant is here in FarmerHelp.</p>
+            <div class="row-flex columns columns-2">
+                <div class="item">
+                    <img src="images/icon_3_pedia_64.png">
+                    <p>11,000 and counting entries in our searchable plantpedia</p>
+                </div>
+                <div class="item">
+                    <img src="images/icon_3_wallpaper_64.png">
+                    <p>200+ stunning flowers &amp; plants wallpapers for your mobile</p>
+                </div>
+                <div class="item" style="padding-right:0">
+                    <img src="images/icon_3_language_64.png">
+                    <p>Contents translated into 9 languages</p>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <img class="content-img-2" src="images/phone_3_detail.png"/>
+        </div>
+    </div>
+</div>
+<div style="background: url('images/pic_4_askshare.png') no-repeat center;background-size: 100% 100%"
+     class="content content-shadow">
+    <div class="main-content">
+        <div class="left">
+            <img class="content-img-1"
+                 src="images/phone_4_map_community.png"/>
+        </div>
+        <div class="right" style="width: 750px">
+            <p class="font1">Feel free to Ask, share, and explore upto lakhs of common species.</p>
+            <p class="font2">Wanna take a tour of our FarmerHelp ? Join most vibrant Interactive community for plant lovers and experts and discover a new appreciation for nature together. </p>
+            <div class="row-flex columns columns-3">
+                <div class="item">
+                    <img src="images/icon_4_answer_64.png">
+                    <p>In large amount, We gave answers to our users.</p>
+                </div>
+                <div class="item">
+                    <img src="images/icon_4_map_64.png">
+                    <p>Discover 2,000,000 observations in the built-in Flower Map</p>
+                </div>
+                <div class="item">
+                    <img src="images/icon_4_collection_64.png">
+                    <p>Build your own collection and turn your pic into wallpaper</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="background: url('images/pic_3_learning.png') no-repeat center;background-size: 100% 100%;height: 750px"
+     class="content">
+    <div class="download-content">
+        <div class="title">Get FarmerHelp <span style="color: #30C29A">for free</span> now</div>
+        <div class="desc-1">Try out FarmerHelp App on your phone and Identify more than 10000 plant species for free !</div>
+        <div class="desc-2">See more info about plants, join our amazing community and explore snaps around the world in the App.</div>
+        <div class="download-two">
+            <img class="download-ios" style="margin-right: 48px"
+                 src="images/btn_download_appstore_80.png">
+            <img class="download-android"
+                 src="images/btn_download_googleplay_80.png">
+        </div>
+        <img src="images/pic_5_phone.png">
+    </div>
+</div>
+<div class="bottom">
+    <div class="part2">
+        <div class="part2-title">
+            <div style="position: relative;display: inline-block">
+                <img class="img1" src="images/web/pic_line_white.png">
+                <div style="position: absolute;bottom:35px;font-size: 26px;color: #ffffff;width: 790px;">FarmerHelp: Instantly identify your plants.</div>
+            </div>
+        </div>
+        <div class="contacts">
+            <div class="contact-first">
+                <div class="contact-item facebook">
+                    <div class="contact-icon"><img
+                                src="images/icon_facebook_white.png"/>
+                    </div>
+                    <div class="contact-info">
+                        <p class="contact-host">Facebook.com</p>
+                        <p class="contact-name">FarmerHelp_AI</p>
+                    </div>
+                </div>
+                <div class="contact-item ins">
+                    <div class="contact-icon"><img
+                                src="images/icon_Instagram_white.png"/>
+                    </div>
+                    <div class="contact-info">
+                        <p class="contact-host">Instagram.com</p>
+                        <p class="contact-name">FarmerHelp_AI</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-second">
+                <div class="contact-item gmail">
+                    <div class="contact-icon"><img
+                                src="images/icon_gmail_white.png"/></div>
+                    <div class="contact-info">
+                        <p class="contact-host">Gmail.com</p>
+                        <p class="contact-name">Support@gmail.com</p>
+                    </div>
+                </div>
+                <img class="presskit"
+                     src="images/btn_presskit_white.png">
+            </div>
+        </div>
+        <div class="company-info">
+            <a href="">Privacy Policy</a>
+            <a href="">Terms of Service</a>
+            <div class="copyright">Copyright © Glority Software Limited. All Rights Reserved.</div>
+            <div class="scroll-top">
+                <img src="images/btn_top_white.png"/>
+                <p>Top</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
